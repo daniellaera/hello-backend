@@ -1,0 +1,10 @@
+services:
+  caffeine-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - JAVA_TOOL_OPTIONS=-XX:UseSVE=0
+    restart: unless-stopped
