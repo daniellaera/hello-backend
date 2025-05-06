@@ -38,7 +38,8 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /srv/caffeine-backend
+            mkdir -p ~/caffeine-backend
+            cd ~/caffeine-backend
             docker compose pull
             docker compose down || true
             docker compose up -d
