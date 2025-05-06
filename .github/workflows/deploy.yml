@@ -31,6 +31,15 @@ jobs:
           docker tag caffeine-backend daniellaera/caffeine-backend:latest
           docker push daniellaera/caffeine-backend:latest
 
+      - name: Copy docker-compose.yml to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_IP }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "docker-compose.yml"
+          target: "~/caffeine-backend"
+
       - name: Deploy on VPS via SSH
         uses: appleboy/ssh-action@v1.2.0
         with:
@@ -38,7 +47,6 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            mkdir -p ~/caffeine-backend
             cd ~/caffeine-backend
             docker compose pull
             docker compose down || true
