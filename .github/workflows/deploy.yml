@@ -27,14 +27,14 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: laera.daniel@hotmail.com
+          username: daniellaera
           password: Only_for_me_2023
 
       # Step 5: Push the Docker image to the registry (if desired)
       - name: Push Docker image to registry
         run: |
-          docker tag caffeine-backend laera.daniel@hotmail.com/caffeine-backend:latest
-          docker push laera.daniel@hotmail.com/caffeine-backend:latest
+          docker tag caffeine-backend daniellaera/caffeine-backend:latest
+          docker push daniellaera/caffeine-backend:latest
 
       # Step 6: Deploy on server using SSH
       - name: Deploy on VPS via SSH
