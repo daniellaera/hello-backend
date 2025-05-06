@@ -4,7 +4,7 @@ FROM maven:3.9.9-eclipse-temurin-21-alpine AS maven-builder
 WORKDIR /app
 COPY . .
 
-ENV JAVA_TOOL_OPTIONS="-XX:UseSVE=0"
+# ENV JAVA_TOOL_OPTIONS="-XX:UseSVE=0"
 
 RUN mvn clean package -DskipTests
 
@@ -15,7 +15,7 @@ WORKDIR /app
 
 COPY --from=maven-builder /app/target/*.jar app.jar
 
-ENV JAVA_TOOL_OPTIONS="-XX:UseSVE=0"
+ENV JAVA_TOOL_OPTIONS="-Xmx1024m -Xms512m"
 
 EXPOSE 8080
 
