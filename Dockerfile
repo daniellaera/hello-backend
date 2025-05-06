@@ -1,5 +1,5 @@
 # Step 1: Build with Maven
-FROM maven:3.9.9-eclipse-temurin-21-alpine AS maven-builder
+FROM --platform=linux/arm64 maven:3.9.9-eclipse-temurin-21-alpine AS maven-builder
 
 WORKDIR /app
 COPY . .
@@ -9,7 +9,7 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # Step 2: Run with JDK
-FROM openjdk:21-jdk-slim
+FROM --platform=linux/arm64 openjdk:21-jdk-slim
 
 WORKDIR /app
 
