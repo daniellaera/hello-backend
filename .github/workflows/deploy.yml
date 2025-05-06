@@ -13,13 +13,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up QEMU (ARM64 support)
+        uses: docker/setup-qemu-action@v2
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-
-      - name: Build Docker image
-        run: |
-          docker buildx create --use # Ensure Buildx is ready
-          docker buildx build --platform linux/arm64 -t caffeine-backend . --push
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
@@ -27,21 +25,17 @@ jobs:
           username: daniellaera
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Push Docker image to Docker Hub
-        run: |
-          docker tag caffeine-backend daniellaera/caffeine-backend:latest
-          docker push daniellaera/caffeine-backend:latest
-
-      - name: Copy docker-compose.yml to server
-        uses: appleboy/scp-action@v0.1.7
+      - name: Build and Push (Multi-Arch)
+        uses: docker/build-push-action@v4
         with:
-          host: ${{ secrets.VPS_IP }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "docker-compose.yml"
-          target: "~/caffeine-backend"
+          context: .
+          platforms: linux/arm64,linux/amd64  # Build for both ARM64 and AMD64
+          push: true
+          tags: |
+            daniellaera/caffeine-backend:latest
+            daniellaera/caffeine-backend:${{ github.sha }}
 
-      - name: Deploy on VPS via SSH
+      - name: Deploy to VPS (ARM64)
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.VPS_IP }}
@@ -49,8 +43,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd ~/caffeine-backend
-            docker compose pull
+            docker pull --platform linux/arm64 daniellaera/caffeine-backend:latest
             docker compose down || true
             docker compose up -d
             docker image prune -f
-            docker ps

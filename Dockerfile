@@ -1,13 +1,13 @@
-# Step 1: Build with Maven
-FROM --platform=linux/arm64 maven:3.9.9-eclipse-temurin-21-alpine AS maven-builder
+# Stage 1: Build with Maven (Base image will adapt depending on the platform)
+FROM maven:3.9.9-eclipse-temurin-21-alpine AS maven-builder
 
 WORKDIR /app
 COPY . .
 
 RUN mvn clean package -DskipTests
 
-# Step 2: Run with JDK
-FROM --platform=linux/arm64 openjdk:21-jdk-slim
+# Stage 2: Use the correct JRE based on platform (Docker Buildx will handle platform)
+FROM eclipse-temurin:21-jre-jammy
 
 WORKDIR /app
 
