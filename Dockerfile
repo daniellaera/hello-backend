@@ -4,8 +4,6 @@ FROM --platform=linux/arm64 maven:3.9.9-eclipse-temurin-21-alpine AS maven-build
 WORKDIR /app
 COPY . .
 
-# ENV JAVA_TOOL_OPTIONS="-XX:UseSVE=0"
-
 RUN mvn clean package -DskipTests
 
 # Step 2: Run with JDK
