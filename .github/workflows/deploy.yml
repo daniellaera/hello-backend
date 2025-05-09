@@ -25,6 +25,17 @@ jobs:
           username: daniellaera
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # ← Auto-injected!
+        with:
+          tag_name: "v1.0.0-${{ github.sha }}"  # Or use a better versioning scheme
+          release_name: "Release ${{ github.sha }}"
+          body: "Automated release for Docker image: daniellaera/caffeine-backend:${{ github.sha }}"
+          draft: false
+          prerelease: false
+
       - name: Build and Push (Multi-Arch)
         uses: docker/build-push-action@v4
         with:
