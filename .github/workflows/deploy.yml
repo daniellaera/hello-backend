@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -28,11 +31,16 @@ jobs:
       - name: Create GitHub Release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # ← Auto-injected!
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: "v1.0.0-${{ github.sha }}"  # Or use a better versioning scheme
-          release_name: "Release ${{ github.sha }}"
-          body: "Automated release for Docker image: daniellaera/caffeine-backend:${{ github.sha }}"
+          tag_name: "v${{ github.run_number }}"  # Simpler versioning
+          release_name: "Release v${{ github.run_number }}"
+          body: |
+            Automated release for commit ${{ github.sha }}
+            
+            Docker images available:
+            - `daniellaera/caffeine-backend:latest`
+            - `daniellaera/caffeine-backend:${{ github.sha }}`
           draft: false
           prerelease: false
 
