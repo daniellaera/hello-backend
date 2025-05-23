@@ -1,8 +1,0 @@
-services:
-  caffeine-backend:
-    image: daniellaera/caffeine-backend:latest
-    ports:
-      - "8080:8080"
-    environment:
-      - JAVA_TOOL_OPTIONS=-XX:UseSVE=0
-    restart: unless-stopped
