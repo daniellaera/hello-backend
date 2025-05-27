@@ -35,4 +35,9 @@ public class HelloController {
     public String test3() {
         return "Test caffeine endpoint! ☕️";
     }
+
+    @GetMapping("/coding")
+    public String coding() {
+        return "Test coding endpoint! ☕️";
+    }
 }

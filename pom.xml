@@ -13,6 +13,18 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>caffeine-backend</name>
 	<description>Demo project for Spring Boot</description>
+
+	<distributionManagement>
+		<repository>
+			<id>nexus-releases</id>
+			<url>http://192.168.1.49:8081/repository/maven-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus-snapshots</id>
+			<url>http://192.168.1.49:8081/repository/maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 	<url/>
 	<licenses>
 		<license/>
