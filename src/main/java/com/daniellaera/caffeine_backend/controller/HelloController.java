@@ -26,13 +26,18 @@ public class HelloController {
         return "Test page 2!";
     }
 
+    @GetMapping("/test3")
+    public String test3() {
+        return "Test page 3!";
+    }
+
     @GetMapping("/world")
     public String world() {
         return "Test world endpoint!";
     }
 
     @GetMapping("/caffeine")
-    public String test3() {
+    public String caffeine() {
         return "Test caffeine endpoint! ☕️";
     }
 
