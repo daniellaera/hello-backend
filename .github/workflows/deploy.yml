@@ -27,7 +27,7 @@ jobs:
       - name: Configure Maven Settings
         run: |
           mkdir -p ~/.m2
-          echo "${{ secrets.MAVEN_SETTINGS_XML }}" > ~/.m2/settings.xml
+          echo "${{ secrets.MAVEN_SETTINGS_XML }}" | base64 --decode > ~/.m2/settings.xml
 
       - name: Set release version
         run: mvn versions:set -DnewVersion=1.0.${{ github.run_number }}

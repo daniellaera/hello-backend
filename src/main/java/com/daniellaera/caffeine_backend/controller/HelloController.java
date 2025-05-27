@@ -21,6 +21,11 @@ public class HelloController {
         return "Test page!";
     }
 
+    @GetMapping("/test2")
+    public String test2() {
+        return "Test page 2!";
+    }
+
     @GetMapping("/world")
     public String world() {
         return "Test world endpoint!";
