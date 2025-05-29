@@ -97,8 +97,8 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd ~/caffeine-backend
-            docker pull --platform linux/arm64 daniellaera/caffeine-backend:latest
+            cd /opt/caffeine-backend
+            docker pull --platform linux/arm64 ghcr.io/daniellaera/caffeine-backend:latest
             docker compose down || true
             docker compose up -d
             docker image prune -f
