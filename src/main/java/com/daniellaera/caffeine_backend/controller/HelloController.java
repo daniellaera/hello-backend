@@ -16,6 +16,11 @@ public class HelloController {
         return "Hello World!";
     }
 
+    @GetMapping("/viber")
+    public String viber() {
+        return "Hello Viber!";
+    }
+
     @GetMapping("/test")
     public String test() {
         return "Test page!";
